@@ -6,7 +6,7 @@
 
 * Дан список словарей с данными по колличеству проданных телефонов
   [
-    {'product': 'iPhone 12', 'items_sold': [363, 500, 224, 358, 480, 476, 470, 216, 270, 388, 312, 186]}, 
+    {'product': 'iPhone 12', 'items_sold': [363, 500, 224, 358, 480, 476, 470, 216, 270, 388, 312, 186]},
     {'product': 'Xiaomi Mi11', 'items_sold': [317, 267, 290, 431, 211, 354, 276, 526, 141, 453, 510, 316]},
     {'product': 'Samsung Galaxy 21', 'items_sold': [343, 390, 238, 437, 214, 494, 441, 518, 212, 288, 272, 247]},
   ]
@@ -16,12 +16,32 @@
 * Посчитать и вывести среднее количество продаж всех товаров
 """
 
+from statistics import mean
+
+
 def main():
     """
     Эта функция вызывается автоматически при запуске скрипта в консоли
     В ней надо заменить pass на ваш код
     """
-    pass
-    
+
+    phone_sales =   [
+    {'product': 'iPhone 12', 'items_sold': [363, 500, 224, 358, 480, 476, 470, 216, 270, 388, 312, 186]},
+    {'product': 'Xiaomi Mi11', 'items_sold': [317, 267, 290, 431, 211, 354, 276, 526, 141, 453, 510, 316]},
+    {'product': 'Samsung Galaxy 21', 'items_sold': [343, 390, 238, 437, 214, 494, 441, 518, 212, 288, 272, 247]},
+  ]
+
+    all_sold = 0
+    mean_sold = 0
+
+    for phone in phone_sales:
+        print(f'Общее количество продаж "{phone["product"]}": {sum(phone["items_sold"])}')
+        print(f'Среднее количество продаж "{phone["product"]}": {mean(phone["items_sold"])}')
+        all_sold += sum(phone["items_sold"])
+        mean_sold += mean(phone["items_sold"])
+
+    print(f'Cуммарное количество продаж всех товаров: {all_sold}')
+    print(f'Среднее количество продаж всех товаров: {mean_sold / len(phone_sales)}')
+
 if __name__ == "__main__":
     main()

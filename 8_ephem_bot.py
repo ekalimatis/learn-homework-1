@@ -12,46 +12,62 @@
   бота отвечать, в каком созвездии сегодня находится планета.
 
 """
+import datetime
 import logging
 
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
+import ephem
+
+from settings import API_KEY
+
 
 logging.basicConfig(format='%(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO,
                     filename='bot.log')
 
-
-PROXY = {
-    'proxy_url': 'socks5://t1.learn.python.ru:1080',
-    'urllib3_proxy_kwargs': {
-        'username': 'learn',
-        'password': 'python'
-    }
-}
-
-
 def greet_user(update, context):
-    text = 'Вызван /start'
-    print(text)
-    update.message.reply_text(text)
+    logging.info('command "Start" received')
+    update.message.reply_text('Привет')
 
+def answer_me(update, context):
+    update.message.reply_text(update.message.text)
 
-def talk_to_me(update, context):
-    user_text = update.message.text
-    print(user_text)
-    update.message.reply_text(text)
-
+def planet_where(update, context):
+    logging.info('command "Planet" received')
+    planet = update.message.text.split()[1].lower()
+    if planet == 'mars':
+        constellation = ephem.constellation(ephem.Mars(datetime.date.today()))
+    elif planet == 'venus':
+        constellation = ephem.constellation(ephem.Venus(datetime.date.today()))
+    elif planet == 'neptune':
+        constellation = ephem.constellation(ephem.Neptune(datetime.date.today()))
+    elif planet == 'jupiter':
+        constellation = ephem.constellation(ephem.Jupiter(datetime.date.today()))
+    elif planet == 'moon':
+        constellation = ephem.constellation(ephem.Moon(datetime.date.today()))
+    elif planet == 'pluto':
+        constellation = ephem.constellation(ephem.Pluto(datetime.date.today()))
+    elif planet == 'saturn':
+        constellation = ephem.constellation(ephem.Saturn(datetime.date.today()))
+    elif planet == 'mercury':
+        constellation = ephem.constellation(ephem.Mercury(datetime.date.today()))
+    elif planet == 'uranus':
+        constellation = ephem.constellation(ephem.Uranus(datetime.date.today()))
+    elif planet == 'sun':
+        constellation = ephem.constellation(ephem.Sun(datetime.date.today()))
+    update.message.reply_text(constellation)
 
 def main():
-    mybot = Updater("КЛЮЧ, КОТОРЫЙ НАМ ВЫДАЛ BotFather", request_kwargs=PROXY, use_context=True)
+    mybot = Updater(API_KEY, use_context = True)
 
     dp = mybot.dispatcher
-    dp.add_handler(CommandHandler("start", greet_user))
-    dp.add_handler(MessageHandler(Filters.text, talk_to_me))
+    dp.add_handler(CommandHandler('start', greet_user))
+    dp.add_handler(CommandHandler('planet', planet_where))
+    dp.add_handler(MessageHandler(Filters.text, answer_me))
 
+    logging.info('Start')
     mybot.start_polling()
     mybot.idle()
 
-
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()
