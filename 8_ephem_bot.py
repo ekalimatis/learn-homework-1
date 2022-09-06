@@ -35,8 +35,8 @@ def answer_me(update, context):
 def planet_where(update, context):
     logging.info('command "Planet" received')
     planet = update.message.text.split()[1].lower()
-    ephem_planet=getattr(ephem, planet.capitalize(), 'None')
-    if ephem_planet != 'None':
+    ephem_planet=getattr(ephem, planet.capitalize(), None)
+    if ephem_planet is not None:
         constellation = ephem.constellation(ephem_planet(datetime.date.today()))
     else:
         constellation = 'Извините, такой планеты нет (:'
