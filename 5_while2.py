@@ -22,9 +22,10 @@ def ask_user(answers_dict):
     """
     Замените pass на ваш код
     """
-    ask = ''
-    while ask != 'Выход':
+    while True:
         ask = input('Задайте свой вопрос: ')
+        if ask =='Выход':
+            break
         print(questions_and_answers.get(ask, 'Не знаю'))
 
 if __name__ == "__main__":

@@ -16,13 +16,14 @@
 
 def occupation_on_age(age):
     if age < 7:
-        return 'Детский сад'
-    if age < 18:
-        return 'Школа'
-    if age < 23:
-        return 'ВУЗ'
+        occupation = 'Детский сад'
+    elif age < 18:
+        occupation = 'Школа'
+    elif age < 23:
+        occupation = 'ВУЗ'
     else:
-        return 'Работа'
+        occupation = 'Работа'
+    return occupation
 
 def main():
     """

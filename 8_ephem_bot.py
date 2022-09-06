@@ -35,26 +35,8 @@ def answer_me(update, context):
 def planet_where(update, context):
     logging.info('command "Planet" received')
     planet = update.message.text.split()[1].lower()
-    if planet == 'mars':
-        constellation = ephem.constellation(ephem.Mars(datetime.date.today()))
-    elif planet == 'venus':
-        constellation = ephem.constellation(ephem.Venus(datetime.date.today()))
-    elif planet == 'neptune':
-        constellation = ephem.constellation(ephem.Neptune(datetime.date.today()))
-    elif planet == 'jupiter':
-        constellation = ephem.constellation(ephem.Jupiter(datetime.date.today()))
-    elif planet == 'moon':
-        constellation = ephem.constellation(ephem.Moon(datetime.date.today()))
-    elif planet == 'pluto':
-        constellation = ephem.constellation(ephem.Pluto(datetime.date.today()))
-    elif planet == 'saturn':
-        constellation = ephem.constellation(ephem.Saturn(datetime.date.today()))
-    elif planet == 'mercury':
-        constellation = ephem.constellation(ephem.Mercury(datetime.date.today()))
-    elif planet == 'uranus':
-        constellation = ephem.constellation(ephem.Uranus(datetime.date.today()))
-    elif planet == 'sun':
-        constellation = ephem.constellation(ephem.Sun(datetime.date.today()))
+    #Так действительно лучше, но не знаю куда тогда воткнуть if из задания ))
+    constellation = ephem.constellation(getattr(ephem, planet.capitalize())(datetime.date.today()))
     update.message.reply_text(constellation)
 
 def main():
